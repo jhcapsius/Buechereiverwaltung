@@ -113,6 +113,30 @@ function Administration() {
       });
   };
 
+  const bookToStorage = (idBookshelf) => {
+    axios.put(config.backendURL + "/book/putbooktostorage", {
+      id: idBookshelf
+    }).then(() => {
+      console.log("Buch zurück in Lager gebracht")
+    })
+  }
+
+  const deleteBookshelf = (idBookshelf) => {
+    bookToStorage(idBookshelf);
+    axios
+      .delete(config.backendURL + `/bookshelf/deleteshelf/${idBookshelf}`, {
+        params: {
+          id: idBookshelf,
+        },
+      })
+      .then(() => {
+        alert(
+          "Bücherregal wurde gelöscht und die Bücher zurück ins Lager gelegt."
+        );
+        window.location.reload(false);
+      });
+  };
+
   return (
     <div>
       <div className="books">
@@ -378,6 +402,13 @@ function Administration() {
                   </tbody>
                 ))}
               </table>
+              <button
+                onClick={() => {
+                  deleteBookshelf(value.ID_BOOKSHELF);
+                }}
+              >
+                Bücherregal löschen
+              </button>
             </div>
           );
         })}
