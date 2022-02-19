@@ -114,12 +114,14 @@ function Administration() {
   };
 
   const bookToStorage = (idBookshelf) => {
-    axios.put(config.backendURL + "/book/putbooktostorage", {
-      id: idBookshelf
-    }).then(() => {
-      console.log("Buch zurück in Lager gebracht")
-    })
-  }
+    axios
+      .put(config.backendURL + "/book/putbooktostorage", {
+        id: idBookshelf,
+      })
+      .then(() => {
+        console.log("Buch zurück in Lager gebracht");
+      });
+  };
 
   const deleteBookshelf = (idBookshelf) => {
     bookToStorage(idBookshelf);
@@ -135,6 +137,17 @@ function Administration() {
         );
         window.location.reload(false);
       });
+  };
+
+  const removeBookFromBookshelf = (idBook) => {
+    console.log(listOfBooks);
+    console.log(idBook);
+    axios.put(config.backendURL + "/book/removebookfromshelf", {
+      id: idBook
+    }).then(() =>{
+      alert("Buch wurde zurück ins Lager gelegt");
+      window.location.reload(false);
+    })
   };
 
   return (
@@ -395,6 +408,18 @@ function Administration() {
                       {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
                       !books.BORROWED ? (
                         <td>{books.GENRE}</td>
+                      ) : (
+                        <></>
+                      )}
+                      {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
+                      !books.BORROWED ? (
+                        <button
+                          onClick={() => {
+                            removeBookFromBookshelf(books.ID_BOOK);
+                          }}
+                        >
+                          Buch entfernen
+                        </button>
                       ) : (
                         <></>
                       )}
