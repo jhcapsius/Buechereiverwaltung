@@ -83,7 +83,7 @@ router.put("/addbooktoshelf", async (req, res) => {
   }
 });
 
-//puts book into a shelf
+//puts books from shelf into storage
 router.put("/putbooktostorage", async (req, res) => {
   const ID_BOOKSHELF = req.body.id;
 
@@ -103,5 +103,19 @@ router.put("/putbooktostorage", async (req, res) => {
     console.log(err);
   }
 });
+
+//put book into storage
+router.put("/removebookfromshelf", async (req, res) => {
+  const ID_BOOK = req.body.id;
+  
+  try{
+    const storagebooks = await BOOK.findOne({where: {ID_BOOK}})
+    storagebooks.ID_BOOKSHELF = null;
+    await storagebooks.save();
+    return res.send(storagebooks);
+  }catch(err){
+    console.log(err)
+  }
+})
 
 module.exports = router;
