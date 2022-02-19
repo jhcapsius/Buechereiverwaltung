@@ -31,6 +31,7 @@
   - Büchern den bestehenden Bücherregalen zuzuweisen
 ---
 ## Was ist noch geplant?
+- Backend in Docker zu integrieren
 - Einen Login für Benutzer und Angestellte zu erstellen
 - Eine Suchfunktion in die Bücherei zu integrieren
 - Die Verwaltung erweitern. Das beinhaltet:
