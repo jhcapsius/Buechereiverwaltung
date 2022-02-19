@@ -220,6 +220,7 @@ function Administration() {
               <th>Autor</th>
               <th>Verlag</th>
               <th>Genre</th>
+              <th>Bücherregal</th>
               <th>Status</th>
             </tr>
           </thead>
@@ -231,6 +232,11 @@ function Administration() {
                 <td>{books.AUTHOR}</td>
                 <td>{books.PUBLISHER}</td>
                 <td>{books.GENRE}</td>
+                {books.ID_BOOKSHELF === null ? (
+                  <td>Buch befindet sich im Lager</td>
+                ): (
+                  <td>{books.ID_BOOKSHELF}</td>
+                )}
                 {books.BORROWED ? <td>ausgeliehen</td> : <td>verfügbar</td>}
                 {books.BORROWED ? (
                   <button
