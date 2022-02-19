@@ -37,7 +37,7 @@
 - Die Verwaltung erweitern. Das beinhaltet:
   - ~~Die Übersicht der Bücher zu erweitern, dass man angezeigt bekommt welche Bücher im Lager~~ (hinzugefügt) 
   - ~~Bücher aus der Datenbank zu löschen~~ (hinzugefügt)
-  - Bücheregale aus der Datenbank zu löschen
+  - ~~Bücheregale aus der Datenbank zu löschen~~ (hinzugefügt)
   - Bücher aus den Regalen zurück ins Lager zu legen
 
   
