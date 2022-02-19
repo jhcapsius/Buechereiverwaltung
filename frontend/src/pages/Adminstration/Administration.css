@@ -1,0 +1,58 @@
+.booksearch input{
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.addbook {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 1em;
+}
+
+.addbook input {
+  margin-right: 0.5em;
+}
+.addbookshelf {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.addbookshelf input {
+  margin-right: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.addBooktoShelf input {
+  margin-right: 0.5em;
+  margin-top: 0.5em;
+}
+
+.books {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+}
+
+.bookTable {
+  border-collapse: collapse;
+}
+
+.bookCategories {
+  background-color: #7cb721;
+}
+
+.bookshelfA {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5em;
+  margin-left: 0.5em;
+}
+
+.bookshelfA table {
+  margin-top: 1em;
+}

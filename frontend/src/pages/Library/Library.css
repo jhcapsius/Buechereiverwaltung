@@ -1,0 +1,28 @@
+.bookshelf {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 0.5em;
+  margin-left: 0.5em;
+}
+
+.bookshelfTable {
+  width: 80%;
+  border-collapse: collapse;
+}
+
+.bookshelfTableHead {
+  width: 80%;
+}
+
+.bookshelfTableHead tr {
+  background-color: #7cb721;
+}
+
+.bookshelfContent {
+  width: 80%;
+}
+
+.bookshelf table {
+  margin-top: 1em;
+}
