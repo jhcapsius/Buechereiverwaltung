@@ -15,7 +15,9 @@ function Administration() {
   const [bookID, setBookID] = useState(0);
   const [searchID, setsearchID] = useState("");
   const [searchedBook, setSearchedBook] = useState({ msg: "placeholder" });
+
   let { id } = useParams;
+
   useEffect(() => {
     axios.get(config.backendURL + "/book/getallbooks").then((response) => {
       console.log(response);
@@ -57,7 +59,7 @@ function Administration() {
         BORROWED: false,
       })
       .then(() => {
-        alert("Buch wurde hinzugefügt");
+        alert("Buch wurde hinzugefügt.");
         window.location.reload(false);
       });
   };
@@ -69,7 +71,20 @@ function Administration() {
         borrow: false,
       })
       .then(() => {
-        console.log("Buch wurde zurückgebracht");
+        console.log("Buch wurde zurückgebracht.");
+        window.location.reload(false);
+      });
+  };
+
+  const deleteBook = (bookID) => {
+    axios
+      .delete(config.backendURL + `/book/deletebook/${bookID}`, {
+        params: {
+          id: bookID,
+        },
+      })
+      .then(() => {
+        console.log("Buch wurde entfernt.");
         window.location.reload(false);
       });
   };
@@ -80,7 +95,7 @@ function Administration() {
         DESCRIPTION: description,
       })
       .then(() => {
-        alert("Bücherregal wurde erstellt");
+        alert("Bücherregal wurde erstellt.");
         window.location.reload(false);
       });
   };
@@ -93,7 +108,7 @@ function Administration() {
         bookshelf: idBookshelf,
       })
       .then(() => {
-        alert("Buch wurde dem Bücherregal hinzugefügt");
+        alert("Buch wurde dem Bücherregal hinzugefügt.");
         window.location.reload(false);
       });
   };
@@ -222,6 +237,8 @@ function Administration() {
               <th>Genre</th>
               <th>Bücherregal</th>
               <th>Status</th>
+              <th>Status ändern</th>
+              <th>Buch entfernen</th>
             </tr>
           </thead>
           {listOfBooks.map((books) => (
@@ -234,20 +251,39 @@ function Administration() {
                 <td>{books.GENRE}</td>
                 {books.ID_BOOKSHELF === null ? (
                   <td>Buch befindet sich im Lager</td>
-                ): (
+                ) : (
                   <td>{books.ID_BOOKSHELF}</td>
                 )}
                 {books.BORROWED ? <td>ausgeliehen</td> : <td>verfügbar</td>}
                 {books.BORROWED ? (
-                  <button
-                    onClick={() => {
-                      borrowBook(books.ID_BOOK);
-                    }}
-                  >
-                    zurück gebracht?
-                  </button>
+                  <td>
+                    <button
+                      onClick={() => {
+                        borrowBook(books.ID_BOOK);
+                      }}
+                    >
+                      zurück gebracht?
+                    </button>
+                  </td>
                 ) : (
-                  <button disabled>zurück gebracht</button>
+                  <td>
+                    <button disabled>zurück gebracht?</button>
+                  </td>
+                )}
+                {!books.BORROWED ? (
+                  <td>
+                    <button
+                      onClick={() => {
+                        deleteBook(books.ID_BOOK);
+                      }}
+                    >
+                      Buch entfernen?
+                    </button>
+                  </td>
+                ) : (
+                  <td>
+                    <button disabled>Buch entfernen?</button>
+                  </td>
                 )}
               </tr>
             </tbody>
