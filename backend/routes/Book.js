@@ -51,6 +51,21 @@ router.put("/borrow", async (req, res) => {
   }
 });
 
+router.delete("/deletebook", async (req, res) => {
+  const ID_BOOK = req.body.id
+
+  try{
+    const deleteBook = await BOOK.findOne({where : {ID_BOOK}})
+    console.log(deleteBook);
+
+    await deleteBook.destroy();
+    
+    return res.json(deleteBook);
+  }catch(err){
+    console.log(err);
+  }
+}) 
+
 //puts book into a shelf
 router.put("/addbooktoshelf", async (req, res) => {
   const ID_BOOK = req.body.id;
