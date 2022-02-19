@@ -89,8 +89,6 @@ router.put("/putbooktostorage", async (req, res) => {
 
   try {
     const storagebooks = await BOOK.findAll({ where: { ID_BOOKSHELF } });
-    console.log("hallo");
-    console.log(storagebooks);
     await storagebooks.forEach((element) => {
       element.ID_BOOKSHELF = null;
     });
