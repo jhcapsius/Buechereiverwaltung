@@ -36,7 +36,7 @@
 - Eine Suchfunktion in die Bücherei zu integrieren
 - Die Verwaltung erweitern. Das beinhaltet:
   - ~~Die Übersicht der Bücher zu erweitern, dass man angezeigt bekommt welche Bücher im Lager~~ (hinzugefügt) 
-  - Bücher aus der Datenbank zu löschen
+  - ~~Bücher aus der Datenbank zu löschen~~ (hinzugefügt)
   - Bücheregale aus der Datenbank zu löschen
   - Bücher aus den Regalen zurück ins Lager zu legen
 
