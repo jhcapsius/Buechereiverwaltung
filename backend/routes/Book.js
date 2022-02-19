@@ -51,9 +51,8 @@ router.put("/borrow", async (req, res) => {
   }
 });
 
-router.delete("/deletebook", async (req, res) => {
-  const ID_BOOK = req.body.id
-
+router.delete("/deletebook/:id", async (req, res) => {
+  const ID_BOOK = req.params.id;
   try{
     const deleteBook = await BOOK.findOne({where : {ID_BOOK}})
     console.log(deleteBook);
