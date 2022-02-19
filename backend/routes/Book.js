@@ -8,19 +8,19 @@ router.get("/getallbooks", async (req, res) => {
   res.json(allBooks);
 });
 
-//get book by id 
+//get book by id
 router.get("/getbookbyid/:id", async (req, res) => {
   const ID_BOOK = req.params.id;
   console.log(ID_BOOK);
-  try{
-    const book = await BOOK.findOne({where: {ID_BOOK}})
+  try {
+    const book = await BOOK.findOne({ where: { ID_BOOK } });
     console.log(book);
-    if(book === null){
+    if (book === null) {
       res.json({});
-    }else{
+    } else {
       res.json(book);
     }
-  }catch(err){
+  } catch (err) {
     console.log(err);
   }
 });
@@ -38,48 +38,71 @@ router.put("/borrow", async (req, res) => {
   const ID_BOOK = req.body.id;
   const BORROW = req.body.borrow;
 
-  try{
-      const bookToBorrow = await BOOK.findOne({where: {ID_BOOK}})
-    
-      bookToBorrow.BORROWED = BORROW;
-      
-      await bookToBorrow.save();
+  try {
+    const bookToBorrow = await BOOK.findOne({ where: { ID_BOOK } });
 
-      return res.json(bookToBorrow);
-  }catch (err){
-      console.log(err)
+    bookToBorrow.BORROWED = BORROW;
+
+    await bookToBorrow.save();
+
+    return res.json(bookToBorrow);
+  } catch (err) {
+    console.log(err);
   }
 });
 
 router.delete("/deletebook/:id", async (req, res) => {
   const ID_BOOK = req.params.id;
-  try{
-    const deleteBook = await BOOK.findOne({where : {ID_BOOK}})
+  try {
+    const deleteBook = await BOOK.findOne({ where: { ID_BOOK } });
     console.log(deleteBook);
 
     await deleteBook.destroy();
-    
+
     return res.json(deleteBook);
-  }catch(err){
+  } catch (err) {
     console.log(err);
   }
-}) 
+});
 
 //puts book into a shelf
 router.put("/addbooktoshelf", async (req, res) => {
   const ID_BOOK = req.body.id;
   const ID_BOOKSHELF = req.body.bookshelf;
 
-  try{
-      const addBook = await BOOK.findOne({where: {ID_BOOK}})
-    
-      addBook.ID_BOOKSHELF = ID_BOOKSHELF;
-      
-      await addBook.save();
+  try {
+    const addBook = await BOOK.findOne({ where: { ID_BOOK } });
 
-      return res.json(addBook);
-  }catch (err){
-      console.log(err)
+    addBook.ID_BOOKSHELF = ID_BOOKSHELF;
+
+    await addBook.save();
+
+    return res.json(addBook);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//puts book into a shelf
+router.put("/putbooktostorage", async (req, res) => {
+  const ID_BOOKSHELF = req.body.id;
+
+  try {
+    const storagebooks = await BOOK.findAll({ where: { ID_BOOKSHELF } });
+    console.log("hallo");
+    console.log(storagebooks);
+    await storagebooks.forEach((element) => {
+      element.ID_BOOKSHELF = null;
+    });
+    console.log("hallo2");
+    console.log(storagebooks);
+    await storagebooks.forEach((element) => {
+      element.save();
+    });
+
+    return res.json(storagebooks);
+  } catch (err) {
+    console.log(err);
   }
 });
 
