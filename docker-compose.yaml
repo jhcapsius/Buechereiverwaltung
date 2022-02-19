@@ -17,19 +17,19 @@ services:
     environment:
       - MYSQL_DATABASE=buechereiverwaltung
       - MYSQL_ROOT_PASSWORD=testpassword12
-  frontend:
-    container_name: frontend
-    build:
-      context: frontend
-    command: npm start  
-    ports:
-      - 3000:3000
-    volumes:
-      - ./frontend/src:/app/src
-      - ./frontend/package.json:/app/package.json
-      - ./frontend/package-lock.json:/app/package-lock.json   
-    depends_on:
-      - database
+  #frontend:
+    #container_name: frontend
+    #build:
+      #context: frontend
+    #command: npm start  
+    #ports:
+      #- 3000:3000
+    #volumes:
+      #- ./frontend/src:/app/src
+      #- ./frontend/package.json:/app/package.json
+      #- ./frontend/package-lock.json:/app/package-lock.json   
+    #depends_on:
+      #- database
 
 volumes:
   db-data:    
