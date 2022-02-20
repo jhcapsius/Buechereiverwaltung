@@ -1,8 +1,7 @@
 import "./App.css";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Library from "./pages/Library/Library";
-import Navbar from "./components/navbar/Navbar";
-import Frontpage from "./pages/Startpage/Frontpage"
+import Register from "./pages/Register/Register"
 import Administration from "./pages/Adminstration/Administration";
 
 function App() {
@@ -10,12 +9,11 @@ function App() {
 
   return (
     <>
-    <Navbar />
       <BrowserRouter>
       <Routes>
         <Route path="/library" element={<Library/>}/>
-        <Route path="/" element={<Frontpage/>}/>
-        <Route path="/adminstration" element={<Library/>}/>
+        <Route path="/" element={<Register/>}/>
+        <Route path="/register" element={<Register/>}/>
         <Route path="/administration" element={<Administration/>}/>
       </Routes>
       </BrowserRouter>
