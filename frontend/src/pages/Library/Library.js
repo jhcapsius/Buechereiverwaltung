@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import config from "../../Config";
 import "./Library.css";
+import Navbar from "../../components/navbar/NavbarUser";
 
 function Library() {
   const [listOfBooks, setListOfBooks] = useState([]);
@@ -37,7 +38,9 @@ function Library() {
   };
 
   return (
-    <div className="bookshelf">
+    <div>
+      <Navbar/>
+      <div className="bookshelf">
       {listOfBookshelves.map((value) => {
         return (
           <table
@@ -101,6 +104,7 @@ function Library() {
           </table>
         );
       })}
+    </div>
     </div>
   );
 }

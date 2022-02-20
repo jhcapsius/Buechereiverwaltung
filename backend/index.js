@@ -5,6 +5,7 @@ const cors = require("cors");
 const userRouter = require("./routes/User");
 const bookRouter = require("./routes/Book");
 const bookshelfRouter = require("./routes/Bookshelves");
+const employeeRouter = require("./routes/Employee")
 
 app.use(express.json());
 app.use(cors());
@@ -13,6 +14,7 @@ app.use(cors());
 app.use("/user", userRouter);
 app.use("/book", bookRouter);
 app.use("/bookshelf", bookshelfRouter);
+app.use("/employee", employeeRouter);
 
 
 
