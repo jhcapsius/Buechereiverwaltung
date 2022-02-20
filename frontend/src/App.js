@@ -3,6 +3,7 @@ import { Routes, Route, BrowserRouter } from "react-router-dom";
 import Library from "./pages/Library/Library";
 import Register from "./pages/Register/Register"
 import Administration from "./pages/Adminstration/Administration";
+import Login from "./pages/Login/Login";
 
 function App() {
   
@@ -12,7 +13,7 @@ function App() {
       <BrowserRouter>
       <Routes>
         <Route path="/library" element={<Library/>}/>
-        <Route path="/" element={<Register/>}/>
+        <Route path="/" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/administration" element={<Administration/>}/>
       </Routes>
