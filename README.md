@@ -32,7 +32,7 @@
 ---
 ## Was ist noch geplant?
 - Backend in Docker zu integrieren
-- Einen Login für Benutzer und Angestellte zu erstellen
+- ~~Einen Login für Benutzer und Angestellte zu erstellen~~ (abgeschlossen)
 - Eine Suchfunktion in die Bücherei zu integrieren
 - ~~Die Verwaltung erweitern. Das beinhaltet:~~ (abgeschlossen)
   - ~~Die Übersicht der Bücher zu erweitern, dass man angezeigt bekommt welche Bücher im Lager~~ (hinzugefügt) 
