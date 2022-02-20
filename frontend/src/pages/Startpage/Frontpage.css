@@ -5,3 +5,72 @@
     justify-content: center;
     align-items: center;
 }
+
+.registration {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 3em;
+}
+
+.registration a {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    padding-top: 0.5em;
+}
+
+
+.registrationbox{
+    width: 40%;
+    border:1px solid black;
+    border-radius: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.registrationInputs {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items:flex-start;
+    padding-left: 4em;
+    margin-bottom: 1em;
+}
+
+.registrationInputs input{
+    width: 80%;
+    margin-bottom: 1em;
+}
+
+.buttonAndError {
+    width: 80%;
+    margin-bottom: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items:flex-start;
+}
+
+.buttonAndError button{
+    margin-right: 1em;
+}
+
+.buttonAndError p{
+    margin-top: 0.1em;
+}
+
+.error{
+    color: red;
+}
+
+.success {
+    color: rgb(14, 182, 14);
+}
