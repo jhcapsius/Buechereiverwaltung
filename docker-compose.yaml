@@ -1,19 +1,35 @@
 version: '3.8'
 
-services:         
+services:
+  backend:
+    container_name: backend
+    build:
+      context: backend
+    command: npm start
+    ports:
+      - 3001:3001
+    volumes:
+      - ./backend/:/app/
+      - ./backend/package.json:/app/package.json
+      - ./backend/package-lock.json:/app/package-lock.json   
+    networks:
+      - backend-frontend
+      - database-backend
+    depends_on:
+      - database    
   database:
     container_name: database 
-    # mariadb image supports both amd64 & arm64 architecture & stays open source
     image: mysql:5.7
-    # mysql
-    # image: mysql:8.0.27
     command: '--default-authentication-plugin=mysql_native_password'
+    expose:
+      - "3306"
     ports:
-      - 3002:3306
-    # no volume mount on host
+      - "3306"
     volumes:
       - db-data:/var/lib/mysql
       - ./database/setup.sql:/docker-entrypoint-initdb.d/setup.sql
+    networks:
+      - database-backend  
     environment:
       - MYSQL_DATABASE=buechereiverwaltung
       - MYSQL_ROOT_PASSWORD=testpassword12
@@ -28,8 +44,13 @@ services:
       - ./frontend/src:/app/src
       - ./frontend/package.json:/app/package.json
       - ./frontend/package-lock.json:/app/package-lock.json   
+    networks:
+      - backend-frontend
     depends_on:
-      - database
+      - backend
 
+networks:
+  backend-frontend:
+  database-backend:      
 volumes:
   db-data:    
