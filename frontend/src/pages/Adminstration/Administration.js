@@ -3,6 +3,7 @@ import config from "../../Config";
 import axios from "axios";
 import "./Administration.css";
 import { useParams } from "react-router-dom";
+import Navbar from "../../components/navbar/NavbarEmployee";
 
 function Administration() {
   const [listOfBooks, setListOfBooks] = useState([]);
@@ -152,6 +153,7 @@ function Administration() {
 
   return (
     <div>
+      <Navbar/>
       <div className="books">
         <h1>Bücher</h1>
         <h2>Suche</h2>
