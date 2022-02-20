@@ -39,5 +39,7 @@
   - ~~Bücher aus der Datenbank zu löschen~~ (hinzugefügt)
   - ~~Bücheregale aus der Datenbank zu löschen~~ (hinzugefügt)
   - ~~Bücher aus den Regalen zurück ins Lager zu legen~~ (hinzugefügt)
-
+--- 
+## Hinweis
+Für den Angestelltenlogin bitte die ID 2,3 oder 4 und das Passwort "password" benutzen
   
