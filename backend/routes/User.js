@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { USER } = require("../models");
+const bcrypt = require("bcrypt");
 
 //sends a list of all user
 router.get("/getalluser", async (req, res) => {
@@ -25,36 +26,34 @@ router.get("/getuserbyid/:email", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const EMAIL_ADDRESS = req.body.email;
-  const PASSWORD = req.body.password;
-  console.log(PASSWORD);
+  const { EMAIL_ADDRESS, PASSWORD } = req.body;
 
-  try {
-    const user = await USER.findOne({ where: { EMAIL_ADDRESS } });
-    console.log(user);
-    if (user != null) {
-      if (PASSWORD === user.PASSWORD) {
-        console.log("User konnte sich erfolgreich einloggen.");
-        res.send({ loggedIn: true });
-      } else {
-        res.json({
-          loggedIn: false,
-          message: "Ungültige Kombination aus Email-Adresse und Passwort!",
-        });
-      }
-    } else {
-      res.json({ loggedIn: false, message: "Account existiert nicht!" });
-    }
-  } catch (err) {
-    console.log(err);
+  const user = await USER.findOne({ where: { EMAIL_ADDRESS } });
+
+  if (!user) {
+    res.json({ loggedIn: false, message: "Account existiert nicht!" });
   }
+
+  bcrypt.compare(PASSWORD, user.PASSWORD).then((match) => {
+    if (!match) {
+      res.json({
+        loggedIn: false,
+        message: "Ungültige Kombination aus Email-Adresse und Passwort!",
+      });
+    }else{
+      console.log("User konnte sich erfolgreich einloggen.");
+        res.send({ loggedIn: true });
+    }
+  });
 });
 
 //adds a new user to the data base
 router.post("/register", async (req, res) => {
   const userdata = req.body;
-  console.log(userdata);
-  await USER.create(userdata);
+  await bcrypt.hash(userdata.PASSWORD, 10).then((hash) => {
+    userdata.PASSWORD = hash;
+    USER.create(userdata);
+  });
   res.json({ message: "Account wurde registriert" });
 });
 
