@@ -43,6 +43,7 @@ router.put("/borrowUser", validateToken, async (req, res) => {
 
     bookToBorrow.BORROWED = BORROWED;
     bookToBorrow.EMAIL_ADDRESS = EMAIL_ADDRESS;
+    bookToBorrow.ID_BOOKSHELF = null;
 
     console.log(bookToBorrow);
 
@@ -63,7 +64,8 @@ router.put("/borrowEmployee", validateToken, async (req, res) => {
     const bookToBorrow = await BOOK.findOne({ where: { ID_BOOK } });
 
     bookToBorrow.BORROWED = BORROW;
-    
+    bookToBorrow.EMAIL_ADDRESS = null; 
+    console.log(bookToBorrow);
     await bookToBorrow.save();
 
     return res.json(bookToBorrow);
