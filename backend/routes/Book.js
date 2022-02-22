@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { BOOK } = require("../models");
+const { validateToken } = require("../middleware/AuthMiddleware");
 
 //get all books
 router.get("/getallbooks", async (req, res) => {
@@ -34,7 +35,27 @@ router.post("/addbook", async (req, res) => {
 });
 
 //changes the borrow status of a book
-router.put("/borrow", async (req, res) => {
+router.put("/borrowUser", validateToken, async (req, res) => {
+  const {ID_BOOK, BORROWED, EMAIL_ADDRESS} = req.body;
+  
+  try {
+    const bookToBorrow = await BOOK.findOne({ where: { ID_BOOK } });
+
+    bookToBorrow.BORROWED = BORROWED;
+    bookToBorrow.EMAIL_ADDRESS = EMAIL_ADDRESS;
+
+    console.log(bookToBorrow);
+
+    await bookToBorrow.save();
+
+    return res.json(bookToBorrow);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+//changes the borrow status of a book
+router.put("/borrowEmployee", validateToken, async (req, res) => {
   const ID_BOOK = req.body.id;
   const BORROW = req.body.borrow;
 
@@ -42,7 +63,7 @@ router.put("/borrow", async (req, res) => {
     const bookToBorrow = await BOOK.findOne({ where: { ID_BOOK } });
 
     bookToBorrow.BORROWED = BORROW;
-
+    
     await bookToBorrow.save();
 
     return res.json(bookToBorrow);
@@ -107,15 +128,15 @@ router.put("/putbooktostorage", async (req, res) => {
 //put book into storage
 router.put("/removebookfromshelf", async (req, res) => {
   const ID_BOOK = req.body.id;
-  
-  try{
-    const storagebooks = await BOOK.findOne({where: {ID_BOOK}})
+
+  try {
+    const storagebooks = await BOOK.findOne({ where: { ID_BOOK } });
     storagebooks.ID_BOOKSHELF = null;
     await storagebooks.save();
     return res.send(storagebooks);
-  }catch(err){
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   }
-})
+});
 
 module.exports = router;
