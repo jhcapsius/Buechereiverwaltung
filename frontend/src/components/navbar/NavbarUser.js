@@ -2,9 +2,13 @@ import React from "react";
 import "./Navbar.css";
 
 function Navbar() {
+  const logout = () => {
+    sessionStorage.clear();
+  }
+
   return (
     <div className="Navbar">
-      <a href="/">Logout</a>
+      <a onClick={logout} href="/">Logout</a>
     </div>
   );
 }
