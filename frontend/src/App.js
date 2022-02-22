@@ -7,16 +7,17 @@ import Login from "./pages/Login/Login";
 
 function App() {
   
-  let loggedIn = sessionStorage.getItem("accessToken") ? true : false;
+  let loggedInUser = sessionStorage.getItem("accessToken") && sessionStorage.getItem("email") ? true : false;
+  let loggedInEmployee = sessionStorage.getItem("accessToken") && sessionStorage.getItem("id") ? true : false;
 
   return (
     <>
       <BrowserRouter>
       <Routes>
-        <Route path="/library" element={loggedIn ? <Library/> : <Navigate to="/" />}/>
+        <Route path="/library" element={loggedInUser ? <Library/> : <Navigate to="/" />}/>
         <Route path="/" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
-        <Route path="/administration" element={loggedIn ? <Administration/> : <Navigate to="/" />}/>
+        <Route path="/administration" element={loggedInEmployee ? <Administration/> : <Navigate to="/" />}/>
       </Routes>
       </BrowserRouter>
     </>
