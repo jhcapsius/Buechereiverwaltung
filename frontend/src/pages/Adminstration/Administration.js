@@ -66,13 +66,20 @@ function Administration() {
   };
 
   const borrowBook = (bookID) => {
+    console.log(sessionStorage.getItem("accessToken"))
     axios
-      .put(config.backendURL + "/book/borrow", {
+      .put(config.backendURL + "/book/borrowEmployee", {
         id: bookID,
         borrow: false,
-      })
-      .then(() => {
-        console.log("Buch wurde zurückgebracht.");
+      },
+      {
+        headers: {
+          accessToken: sessionStorage.getItem("accessToken")
+        }
+      }
+      )
+      .then((response) => {
+        alert("Buch wurde zurückgebracht");
         window.location.reload(false);
       });
   };
@@ -200,11 +207,13 @@ function Administration() {
                   <tr>
                     <td>{searchedBook.ID_BOOK}</td>
                     <td>{searchedBook.TITLE}</td>
-                    {searchedBook.ID_BOOKSHELF === null ? (
-                      <td>Buch befindet sich im Lager</td>
-                    ) : (
-                      <td>{searchedBook.ID_BOOKSHELF}</td>
-                    )}
+                    {searchedBook.EMAIL_ADDRESS != null ? (
+                  <td>Ausgeliehen von {searchedBook.EMAIL_ADDRESS}</td>
+                ) : searchedBook.ID_BOOKSHELF === null ? (
+                  <td>Buch befindet sich im Lager</td>
+                ) : (
+                  <td>Buch befindet sich in Bücheregal {searchedBook.ID_BOOKSHELF}</td>
+                )}
                     {searchedBook.BORROWED ? (
                       <td>ausgeliehen</td>
                     ) : (
@@ -275,8 +284,7 @@ function Administration() {
               <th>Verlag</th>
               <th>Genre</th>
               <th>Bücherregal</th>
-              <th>Status</th>
-              <th>Status ändern</th>
+              <th>Verleihtatus ändern</th>
               <th>Buch entfernen</th>
             </tr>
           </thead>
@@ -288,12 +296,14 @@ function Administration() {
                 <td>{books.AUTHOR}</td>
                 <td>{books.PUBLISHER}</td>
                 <td>{books.GENRE}</td>
-                {books.ID_BOOKSHELF === null ? (
+                {books.EMAIL_ADDRESS != null ? (
+                  <td>Ausgeliehen von {books.EMAIL_ADDRESS}</td>
+                ) : books.ID_BOOKSHELF === null ? (
                   <td>Buch befindet sich im Lager</td>
                 ) : (
-                  <td>{books.ID_BOOKSHELF}</td>
+                  <td>Buch befindet sich in Bücheregal {books.ID_BOOKSHELF}</td>
                 )}
-                {books.BORROWED ? <td>ausgeliehen</td> : <td>verfügbar</td>}
+                
                 {books.BORROWED ? (
                   <td>
                     <button
