@@ -58,6 +58,7 @@ function Administration() {
         PUBLISHER: publisher,
         GENRE: genre,
         BORROWED: false,
+        ID_EMPLOYEE: sessionStorage.getItem("id"),
       })
       .then(() => {
         alert("Buch wurde hinzugefügt.");
@@ -66,17 +67,19 @@ function Administration() {
   };
 
   const borrowBook = (bookID) => {
-    console.log(sessionStorage.getItem("accessToken"))
+    console.log(sessionStorage.getItem("accessToken"));
     axios
-      .put(config.backendURL + "/book/borrowEmployee", {
-        id: bookID,
-        borrow: false,
-      },
-      {
-        headers: {
-          accessToken: sessionStorage.getItem("accessToken")
+      .put(
+        config.backendURL + "/book/borrowEmployee",
+        {
+          id: bookID,
+          borrow: false,
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
         }
-      }
       )
       .then((response) => {
         alert("Buch wurde zurückgebracht");
@@ -150,17 +153,19 @@ function Administration() {
   const removeBookFromBookshelf = (idBook) => {
     console.log(listOfBooks);
     console.log(idBook);
-    axios.put(config.backendURL + "/book/removebookfromshelf", {
-      id: idBook
-    }).then(() =>{
-      alert("Buch wurde zurück ins Lager gelegt");
-      window.location.reload(false);
-    })
+    axios
+      .put(config.backendURL + "/book/removebookfromshelf", {
+        id: idBook,
+      })
+      .then(() => {
+        alert("Buch wurde zurück ins Lager gelegt");
+        window.location.reload(false);
+      });
   };
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="books">
         <h1>Bücher</h1>
         <h2>Suche</h2>
@@ -208,12 +213,15 @@ function Administration() {
                     <td>{searchedBook.ID_BOOK}</td>
                     <td>{searchedBook.TITLE}</td>
                     {searchedBook.EMAIL_ADDRESS != null ? (
-                  <td>Ausgeliehen von {searchedBook.EMAIL_ADDRESS}</td>
-                ) : searchedBook.ID_BOOKSHELF === null ? (
-                  <td>Buch befindet sich im Lager</td>
-                ) : (
-                  <td>Buch befindet sich in Bücheregal {searchedBook.ID_BOOKSHELF}</td>
-                )}
+                      <td>Ausgeliehen von {searchedBook.EMAIL_ADDRESS}</td>
+                    ) : searchedBook.ID_BOOKSHELF === null ? (
+                      <td>Buch befindet sich im Lager</td>
+                    ) : (
+                      <td>
+                        Buch befindet sich in Bücheregal{" "}
+                        {searchedBook.ID_BOOKSHELF}
+                      </td>
+                    )}
                     {searchedBook.BORROWED ? (
                       <td>ausgeliehen</td>
                     ) : (
@@ -303,7 +311,7 @@ function Administration() {
                 ) : (
                   <td>Buch befindet sich in Bücheregal {books.ID_BOOKSHELF}</td>
                 )}
-                
+
                 {books.BORROWED ? (
                   <td>
                     <button
