@@ -9,6 +9,19 @@ router.get("/getallbooks", async (req, res) => {
   res.json(allBooks);
 });
 
+//get books by title
+
+router.get("/getbooksbyname/:title", async(req, res) => {
+  const TITLE = req.params.title;
+
+  const books = await BOOK.findAll({where: {TITLE}});
+  if(!books){
+    res.send({found: false, message: "Buch nicht vorhanden"})
+  }else{
+    res.send({found: true}, books);
+  }
+})
+
 //get book by id
 router.get("/getbookbyid/:id", async (req, res) => {
   const ID_BOOK = req.params.id;
@@ -35,7 +48,7 @@ router.post("/addbook", async (req, res) => {
 });
 
 //changes the borrow status of a book
-router.put("/borrowUser", validateToken, async (req, res) => {
+router.put("/borrowUser", async (req, res) => {
   const {ID_BOOK, BORROWED, EMAIL_ADDRESS} = req.body;
   
   try {
@@ -56,7 +69,7 @@ router.put("/borrowUser", validateToken, async (req, res) => {
 });
 
 //changes the borrow status of a book
-router.put("/borrowEmployee", validateToken, async (req, res) => {
+router.put("/borrowEmployee", async (req, res) => {
   const ID_BOOK = req.body.id;
   const BORROW = req.body.borrow;
 
