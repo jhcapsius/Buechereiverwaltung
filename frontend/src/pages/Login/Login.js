@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
 import config from "../../Config";
-import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/navbar/NavbarFrontpage";
 
 function Login() {
@@ -14,16 +13,16 @@ function Login() {
   const [errorMsgEmp, setErrorMsgEmp] = useState("");
   const [emailboolUser, setEmailBoolUser] = useState(false);
   const [idboolEmp, setIDBoolEmp] = useState(false);
-  let navigate = useNavigate();
-
+ 
   const userLogin = () => {
     axios.post(config.backendURL + "/user/login", {
       EMAIL_ADDRESS: emailUser,
       PASSWORD: passwordUser
     }).then((response) => {
-      console.log(response)
       if(response.data.loggedIn){
-        navigate("/library");
+        sessionStorage.setItem("accessToken", response.data.accessToken);
+        sessionStorage.setItem("email", response.data.email);
+        window.location = config.frontendURL + "/library";
       } else{
         setEmailBoolUser(true);
         setErrorMsgUser(response.data.message);
@@ -33,11 +32,13 @@ function Login() {
 
   const empLogin = () => {
     axios.post(config.backendURL + "/employee/login",{
-      id: id,
-      password: passwordEmp
+      ID_EMPLOYEE: id,
+      PASSWORD: passwordEmp
     }).then((response) => {
       if(response.data.loggedIn){
-        navigate("/administration");
+        sessionStorage.setItem("accessToken", response.data.accessToken);
+        sessionStorage.setItem("id", response.data.id);
+        window.location = config.frontendURL + "/administration";
       }else{
         setIDBoolEmp(true);
         setErrorMsgEmp(response.data.message);
