@@ -1,17 +1,3 @@
-/*==============================================================*/
-/* Fill customer with sample values                             */
-/*==============================================================*/
-
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('thelegend27@gmail.com', 'the legend27', 'thelegend27');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('leeroyjenkins@gmail.com', 'Leeroy Jenkins', 'testzugang12');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('albertzweistein@gmail.com', 'Albert Zweistein', 'zweisteinium');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('maxm@gmail.com', 'Max Mustermann', 'maxmustermann42');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('erikam@gmail.com', 'Erika Mustermann', 'erikamustermann1337');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('berndvogel@einrot.com', 'Bernd Vogel', 'vogelgesang12');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('timherrmann@cuvox.de', 'Tim Herrmann', 't1mmyh3rrm4nn');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('julianeebersbacher@cuvox.de', 'Juliane Ebersbacher', 'julibacher25');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('dmoench@gmail.com', 'Diana Moench', '13dmoench37');
-insert into user (EMAIL_ADDRESS, NAME, PASSWORD) values ('cristinahartmann@gmail.com', 'Christina Hartmann', 'hartmann10');
 
 /*==============================================================*/
 /* Fill jobtitle with sample values                             */
