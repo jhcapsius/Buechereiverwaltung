@@ -8,6 +8,8 @@ import Navbar from "../../components/navbar/NavbarUser";
 function Library() {
   const [listOfBooks, setListOfBooks] = useState([]);
   const [listOfBookshelves, setListOfBookshelves] = useState([]);
+  const [searchTitle, setSearchTitle] = useState("");
+  const [searchedBook, setSearchedBook] = useState([]);
 
   useEffect(() => {
     axios.get(config.backendURL + "/book/getallbooks").then((response) => {
@@ -25,19 +27,36 @@ function Library() {
       });
   }, []);
 
-  const borrowBook = (bookID) => {
-   
+  const findBook = () => {
     axios
-      .put(config.backendURL + "/book/borrowUser", {
-        ID_BOOK: bookID,
-        BORROWED: true,
-        EMAIL_ADDRESS: sessionStorage.getItem("email")
-      },
-      {
-        headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
+      .get(
+        config.backendURL + `/book/${searchTitle}`,
+        {
+          params: {
+            title: searchTitle,
+          },
+        },
+        []
+      )
+      .then((response) => {
+        setSearchedBook(response.data);
+      });
+  };
+
+  const borrowBook = (bookID) => {
+    axios
+      .put(
+        config.backendURL + "/book/borrowUser",
+        {
+          ID_BOOK: bookID,
+          BORROWED: true,
+          EMAIL_ADDRESS: sessionStorage.getItem("email"),
+        },
+        {
+          headers: {
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
         }
-      }
       )
       .then((response) => {
         alert("Buch wurde ausgeliehen");
@@ -47,72 +66,94 @@ function Library() {
 
   return (
     <div>
-      <Navbar/>
-      <div className="bookshelf">
-      {listOfBookshelves.map((value) => {
-        return (
-          <table
-            className="bookshelfTable"
-            border="1"
-            cellSpacing={5}
-            cellPadding={10}
+      <Navbar />
+      <h1>Suche</h1>
+      <div className="booksearch">
+        <input
+          type="text"
+          placeholder="Buch-ID..."
+          onChange={(event) => {
+            setSearchTitle(event.target.value);
+          }}
+        />
+        {searchTitle.length === 0 ? (
+          <button disabled>Buch suchen</button>
+        ) : (
+          <button
+            onClick={() => {
+              findBook();
+            }}
           >
-            <thead className="bookshelfTableHead">
-              Bücherregal {value.ID_BOOKSHELF}: {value.DESCRIPTION}
-              <tr className="bookshelfCategories">
-                <th>Titel</th>
-                <th>Author</th>
-                <th>Verlag</th>
-                <th>Genre</th>
-                <th>Ausleihen</th>
-              </tr>
-            </thead>
-            {listOfBooks.map((books) => (
-              <tbody className="bookshelfContent">
-                <tr>
-                  {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
-                  !books.BORROWED ? (
-                    <td>{books.TITLE}</td>
-                  ) : (
-                    <></>
-                  )}
-                  {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
-                  !books.BORROWED ? (
-                    <td>{books.AUTHOR}</td>
-                  ) : (
-                    <></>
-                  )}
-                  {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
-                  !books.BORROWED ? (
-                    <td>{books.PUBLISHER}</td>
-                  ) : (
-                    <></>
-                  )}
-                  {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
-                  !books.BORROWED ? (
-                    <td>{books.GENRE}</td>
-                  ) : (
-                    <></>
-                  )}
-                  {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
-                  !books.BORROWED ? (
-                    <button
-                      onClick={() => {
-                        borrowBook(books.ID_BOOK);
-                      }}
-                    >
-                      Ausleihen
-                    </button>
-                  ) : (
-                    <></>
-                  )}
+            Buch suchen
+          </button>
+        )}
+      </div>
+      <h1>Bücheregale</h1>
+      <div className="bookshelf">
+        {listOfBookshelves.map((value) => {
+          return (
+            <table
+              className="bookshelfTable"
+              border="1"
+              cellSpacing={5}
+              cellPadding={10}
+            >
+              <thead className="bookshelfTableHead">
+                Bücherregal {value.ID_BOOKSHELF}: {value.DESCRIPTION}
+                <tr className="bookshelfCategories">
+                  <th>Titel</th>
+                  <th>Author</th>
+                  <th>Verlag</th>
+                  <th>Genre</th>
+                  <th>Ausleihen</th>
                 </tr>
-              </tbody>
-            ))}
-          </table>
-        );
-      })}
-    </div>
+              </thead>
+              {listOfBooks.map((books) => (
+                <tbody className="bookshelfContent">
+                  <tr>
+                    {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
+                    !books.BORROWED ? (
+                      <td>{books.TITLE}</td>
+                    ) : (
+                      <></>
+                    )}
+                    {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
+                    !books.BORROWED ? (
+                      <td>{books.AUTHOR}</td>
+                    ) : (
+                      <></>
+                    )}
+                    {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
+                    !books.BORROWED ? (
+                      <td>{books.PUBLISHER}</td>
+                    ) : (
+                      <></>
+                    )}
+                    {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
+                    !books.BORROWED ? (
+                      <td>{books.GENRE}</td>
+                    ) : (
+                      <></>
+                    )}
+                    {books.ID_BOOKSHELF === value.ID_BOOKSHELF &&
+                    !books.BORROWED ? (
+                      <button
+                        onClick={() => {
+                          borrowBook(books.ID_BOOK);
+                        }}
+                      >
+                        Ausleihen
+                      </button>
+                    ) : (
+                      <></>
+                    )}
+                  </tr>
+                </tbody>
+              ))}
+            </table>
+          );
+        })}
+      </div>
     </div>
   );
 }
