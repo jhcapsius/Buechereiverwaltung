@@ -30,23 +30,26 @@ router.post("/login", async (req, res) => {
   const { EMAIL_ADDRESS, PASSWORD } = req.body;
 
   const user = await USER.findOne({ where: { EMAIL_ADDRESS } });
- 
+
   if (!user) {
     res.json({ loggedIn: false, message: "Account existiert nicht!" });
+  } else {
+    bcrypt.compare(PASSWORD, user.PASSWORD).then((match) => {
+      if (!match) {
+        res.json({
+          loggedIn: false,
+          message: "Ungültige Kombination aus Email-Adresse und Passwort!",
+        });
+      } else {
+        console.log("User konnte sich erfolgreich einloggen.");
+        const accessToken = sign(
+          { user: user.EMAIL_ADDRESS },
+          "~&Nc<SDtH}:uPjsW"
+        );
+        res.send({ loggedIn: true, accessToken, email: user.EMAIL_ADDRESS });
+      }
+    });
   }
-
-  bcrypt.compare(PASSWORD, user.PASSWORD).then((match) => {
-    if (!match) {
-      res.json({
-        loggedIn: false,
-        message: "Ungültige Kombination aus Email-Adresse und Passwort!",
-      });
-    } else {
-      console.log("User konnte sich erfolgreich einloggen.");
-      const accessToken = sign({user: user.EMAIL_ADDRESS}, "~&Nc<SDtH}:uPjsW");
-      res.send({ loggedIn: true, accessToken, email: user.EMAIL_ADDRESS});
-    }
-  });
 });
 
 //adds a new user to the data base
