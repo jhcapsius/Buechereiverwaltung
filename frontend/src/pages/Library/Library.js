@@ -87,7 +87,11 @@ function Library() {
             Buch suchen
           </button>
         )}
+        <div></div>
       </div>
+            
+
+
       <h1>Bücheregale</h1>
       <div className="bookshelf">
         {listOfBookshelves.map((value) => {
