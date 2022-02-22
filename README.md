@@ -26,12 +26,14 @@
 ## Was ist noch geplant?
 - ~~Backend in Docker zu integrieren~~ (abgeschlossen
 - ~~Einen Login für Benutzer und Angestellte zu erstellen~~ (abgeschlossen)
-- Eine Suchfunktion in die Bücherei zu integrieren
+- Eine Suchfunktion in die Bücherei zu integrieren (zum teil)
 - ~~Die Verwaltung erweitern. Das beinhaltet:~~ (abgeschlossen)
   - ~~Die Übersicht der Bücher zu erweitern, dass man angezeigt bekommt welche Bücher im Lager~~ (hinzugefügt) 
   - ~~Bücher aus der Datenbank zu löschen~~ (hinzugefügt)
   - ~~Bücheregale aus der Datenbank zu löschen~~ (hinzugefügt)
   - ~~Bücher aus den Regalen zurück ins Lager zu legen~~ (hinzugefügt)
+- ~~Passwortverschlüsselung~~ (abgeschlossen)
+- ~~Authentifizierung~~ (abgeschlossen)
 --- 
 ## Hinweis
 Für den Angestelltenlogin bitte die ID 2,3 oder 4 und das Passwort "password" benutzen
