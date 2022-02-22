@@ -26,12 +26,20 @@ function Library() {
   }, []);
 
   const borrowBook = (bookID) => {
+   
     axios
-      .put(config.backendURL + "/book/borrow", {
-        id: bookID,
-        borrow: true,
-      })
-      .then(() => {
+      .put(config.backendURL + "/book/borrowUser", {
+        ID_BOOK: bookID,
+        BORROWED: true,
+        EMAIL_ADDRESS: sessionStorage.getItem("email")
+      },
+      {
+        headers: {
+          accessToken: sessionStorage.getItem("accessToken"),
+        }
+      }
+      )
+      .then((response) => {
         alert("Buch wurde ausgeliehen");
         window.location.reload(false);
       });
