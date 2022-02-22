@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { USER } = require("../models");
 const bcrypt = require("bcrypt");
+const { sign } = require("jsonwebtoken");
 
 //sends a list of all user
 router.get("/getalluser", async (req, res) => {
@@ -40,9 +41,10 @@ router.post("/login", async (req, res) => {
         loggedIn: false,
         message: "Ungültige Kombination aus Email-Adresse und Passwort!",
       });
-    }else{
+    } else {
       console.log("User konnte sich erfolgreich einloggen.");
-        res.send({ loggedIn: true });
+      const accessToken = sign({user: user.EMAIL_ADDRESS}, "~&Nc<SDtH}:uPjsW");
+      res.send({ loggedIn: true, accessToken });
     }
   });
 });
