@@ -30,7 +30,7 @@ router.post("/login", async (req, res) => {
   const { EMAIL_ADDRESS, PASSWORD } = req.body;
 
   const user = await USER.findOne({ where: { EMAIL_ADDRESS } });
-
+ 
   if (!user) {
     res.json({ loggedIn: false, message: "Account existiert nicht!" });
   }
@@ -44,7 +44,7 @@ router.post("/login", async (req, res) => {
     } else {
       console.log("User konnte sich erfolgreich einloggen.");
       const accessToken = sign({user: user.EMAIL_ADDRESS}, "~&Nc<SDtH}:uPjsW");
-      res.send({ loggedIn: true, accessToken });
+      res.send({ loggedIn: true, accessToken, email: user.EMAIL_ADDRESS});
     }
   });
 });
