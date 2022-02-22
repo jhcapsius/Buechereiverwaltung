@@ -18,8 +18,8 @@ function Login() {
 
   const userLogin = () => {
     axios.post(config.backendURL + "/user/login", {
-      email: emailUser,
-      password: passwordUser
+      EMAIL_ADDRESS: emailUser,
+      PASSWORD: passwordUser
     }).then((response) => {
       console.log(response)
       if(response.data.loggedIn){
