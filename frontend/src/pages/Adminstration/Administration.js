@@ -67,13 +67,12 @@ function Administration() {
   };
 
   const borrowBook = (bookID) => {
-    console.log(sessionStorage.getItem("accessToken"));
     axios
       .put(
         config.backendURL + "/book/borrowEmployee",
         {
-          id: bookID,
-          borrow: false,
+          ID_BOOK: bookID,
+          BORROWED: false,
         },
         {
           headers: {
@@ -96,6 +95,7 @@ function Administration() {
       })
       .then(() => {
         console.log("Buch wurde entfernt.");
+        alert("Buch wurde gelöscht.");
         window.location.reload(false);
       });
   };
@@ -130,7 +130,8 @@ function Administration() {
         id: idBookshelf,
       })
       .then(() => {
-        console.log("Buch zurück in Lager gebracht");
+        alert("Buch wurde zurück ins Lager gebracht.");
+        window.location.reload(false);
       });
   };
 
