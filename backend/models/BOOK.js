@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) =>{
         },
         //foreign key
         ID_USER:{
-            type: int,
+            type: DataTypes.INTEGER,
             allowNull: true
         },
         //foreign key

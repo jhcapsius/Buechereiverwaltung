@@ -3,21 +3,24 @@
     "username": "root",
     "password": "testpassword12",
     "database": "buechereiverwaltung",
-    "host": "database",
-    "dialect": "mysql"
+    "host": "localhost",
+    "dialect": "mysql",
+    "port": "3002"
   },
   "test": {
     "username": "root",
     "password": "testpassword12",
     "database": "buechereiverwaltung",
     "host": "database",
-    "dialect": "mysql"
+    "dialect": "localhost",
+    "port": "3002"
   },
   "production": {
     "username": "root",
     "password": "testpassword12",
     "database": "buechereiverwaltung",
-    "host": "database",
-    "dialect": "mysql"
+    "host": "localhost",
+    "dialect": "mysql",
+    "port": "3002"
   }
 }
