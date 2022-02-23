@@ -4,6 +4,7 @@ import Library from "./pages/Library/Library";
 import Register from "./pages/Register/Register"
 import Administration from "./pages/Adminstration/Administration";
 import Login from "./pages/Login/Login";
+import Database from "./pages/Database/Database";
 
 function App() {
   
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/library" element={loggedInUser ? <Library/> : <Navigate to="/" />}/>
         <Route path="/" element={<Login/>}/>
+        <Route path="/database" element={<Database/>}/>
         <Route path="/register" element={<Register/>}/>
         <Route path="/administration" element={loggedInEmployee ? <Administration/> : <Navigate to="/" />}/>
       </Routes>
