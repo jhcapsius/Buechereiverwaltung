@@ -60,6 +60,7 @@ router.put("/borrowUser", async (req, res) => {
 
   //updates book entry in database
   await borrowBook.save();
+  
   return res.send(borrowBook);
 });
 
