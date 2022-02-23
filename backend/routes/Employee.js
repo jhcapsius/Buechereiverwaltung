@@ -3,6 +3,11 @@ const router = express.Router();
 const { EMPLOYEE } = require("../models");
 const { sign } = require("jsonwebtoken");
 
+router.get("/getallemployees", async (req, res) =>{
+  const allEmployees = await EMPLOYEE.findAll();
+  res.json(allEmployees);
+})
+
 router.post("/login", async (req, res) => {
   const { ID_EMPLOYEE, PASSWORD } = req.body;
   const JOB_TITLE = "Bibliothekar";
