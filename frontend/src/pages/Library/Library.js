@@ -10,7 +10,9 @@ function Library() {
   const [listOfBookshelves, setListOfBookshelves] = useState([]);
   const [searchTitle, setSearchTitle] = useState("");
   const [searchedBook, setSearchedBook] = useState([]);
+  const [searchErrorMsg, setSearchErrorMsg] = useState("");
 
+  //gets all books from database when enter the site
   useEffect(() => {
     axios.get(config.backendURL + "/book/getallbooks").then((response) => {
       console.log(response);
@@ -18,6 +20,7 @@ function Library() {
     });
   }, []);
 
+  ////gets all bookshelves from database when enter the site
   useEffect(() => {
     axios
       .get(config.backendURL + "/bookshelf/getallbookshelves")
@@ -27,22 +30,29 @@ function Library() {
       });
   }, []);
 
-  const findBook = () => {
+  //finds a specific book title if available and returns all books with that title
+  const booksearch = () => {
+    setSearchedBook("");
+    console.log(searchTitle);
     axios
-      .get(
-        config.backendURL + `/book/${searchTitle}`,
+      .post(
+        config.backendURL + "/book/getbooksbyname",
         {
-          params: {
-            title: searchTitle,
-          },
+          TITLE: searchTitle,
         },
-        []
       )
       .then((response) => {
-        setSearchedBook(response.data);
+        console.log(response);
+        if (response.data.found) {
+          setSearchedBook(response.data.book);
+          setSearchErrorMsg("");
+        } else {
+          setSearchErrorMsg(response.data.message);
+        }
       });
   };
 
+  //allowes the user to borrow a book
   const borrowBook = (bookID) => {
     axios
       .put(
@@ -50,7 +60,7 @@ function Library() {
         {
           ID_BOOK: bookID,
           BORROWED: true,
-          EMAIL_ADDRESS: sessionStorage.getItem("email"),
+          ID_USER: sessionStorage.getItem("userID"),
         },
         {
           headers: {
@@ -67,11 +77,11 @@ function Library() {
   return (
     <div>
       <Navbar />
-      <h1>Suche</h1>
       <div className="booksearch">
+        <h1>Suche</h1>
         <input
           type="text"
-          placeholder="Buch-ID..."
+          placeholder="Buch-Title..."
           onChange={(event) => {
             setSearchTitle(event.target.value);
           }}
@@ -81,19 +91,54 @@ function Library() {
         ) : (
           <button
             onClick={() => {
-              findBook();
+              booksearch();
             }}
           >
             Buch suchen
           </button>
         )}
-        <div></div>
+        <div>
+          {Object.keys(searchedBook).length === 1 ? (
+            <p></p>
+          ) : Object.keys(searchedBook).length === 0 ? (
+            <p>{searchErrorMsg}</p>
+          ) : (
+            <table
+              className="bookTable"
+              border="1"
+              cellSpacing={5}
+              cellPadding={10}
+            >
+              <thead>
+                <tr className="bookCategories">
+                  <th>Titel</th>
+                  <th>Bücherregal</th>
+                  <th>Autor</th>
+                  <th>Verlag</th>
+                  <th>Genre</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              {searchedBook.map((books) => (
+              <tbody className="bookshelfContent">
+                <tr>
+                  <td>{books.TITLE}</td>
+                  {!books.ID_BOOKSHELF ? <td>Lager</td> : (
+                    <td>{books.ID_BOOKSHELF}</td>
+                  )}
+                  <td>{books.AUTHOR}</td>
+                  <td>{books.PUBLISHER}</td>
+                  <td>{books.GENRE}</td>
+                  {books.BORROWED ? <td>ausgeliehen</td> : <td>verfügbar</td>}
+                </tr>
+              </tbody>
+            ))}
+            </table>
+          )}
+        </div>
       </div>
-            
-
-
-      <h1>Bücheregale</h1>
       <div className="bookshelf">
+      <h1>Bücheregale</h1>
         {listOfBookshelves.map((value) => {
           return (
             <table
