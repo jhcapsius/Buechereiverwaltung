@@ -16,7 +16,7 @@ drop table if exists VACATION;
 create table BOOK
 (
    ID_BOOK int not null AUTO_INCREMENT,
-   EMAIL_ADDRESS varchar(200),
+   ID_USER int,
    ID_BOOKSHELF int,
    ID_EMPLOYEE int,
    TITLE varchar(200) not null,
@@ -42,10 +42,11 @@ create table BOOKSHELF
 /*==============================================================*/
 create table USER
 (
+   ID_USER int not null AUTO_INCREMENT,
    EMAIL_ADDRESS varchar(200) not null,
    NAME varchar(300) not null,
    PASSWORD varchar(200) not null,
-   primary key (EMAIL_ADDRESS)
+   primary key (ID_USER)
 );
 
 /*==============================================================*/
@@ -76,8 +77,8 @@ create table JOB_TITLE
 
 
 
-alter table BOOK add constraint FK_BOOK_USER foreign key (EMAIL_ADDRESS)
-      references USER (EMAIL_ADDRESS) on delete restrict on update restrict;
+alter table BOOK add constraint FK_BOOK_USER foreign key (ID_USER)
+      references USER (ID_USER) on delete restrict on update restrict;
 
 alter table BOOK add constraint FK_BOOK_SHELF foreign key (ID_BOOKSHELF)
       references BOOKSHELF (ID_BOOKSHELF) on delete restrict on update restrict;
