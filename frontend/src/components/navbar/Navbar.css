@@ -23,6 +23,7 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+/*Frontpage css*/
 .Content-Left {
     width: 100%;
     display: flex;
@@ -30,7 +31,7 @@
     justify-content: flex-end;
     align-items: center;
 }
-
+/*Frontpage css*/
 .Content-Right {
     width: 100%;
     display: flex;
