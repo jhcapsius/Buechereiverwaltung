@@ -1,54 +1,59 @@
 import React, { useState } from "react";
 import "./Login.css";
 import axios from "axios";
-import config from "../../Config";
+import CONFIG from "../../Config";
 import Navbar from "../../components/navbar/NavbarFrontpage";
 
 function Login() {
-  const [emailUser, setEmailUser] = useState("");
-  const[id, setID] = useState("");
+  const [username, setUsername] = useState("");
+  const [id, setID] = useState("");
   const [passwordUser, setPasswordUser] = useState("");
   const [passwordEmp, setPasswordEmp] = useState("");
   const [errorMsgUser, setErrorMsgUser] = useState("");
   const [errorMsgEmp, setErrorMsgEmp] = useState("");
-  const [emailboolUser, setEmailBoolUser] = useState(false);
-  const [idboolEmp, setIDBoolEmp] = useState(false);
- 
+  const [messageUserBool, setMessageUserBool] = useState(false);
+  const [messageEmpBool, setMessageEmpBool] = useState(false);
+
   const userLogin = () => {
-    axios.post(config.backendURL + "/user/login", {
-      EMAIL_ADDRESS: emailUser,
-      PASSWORD: passwordUser
-    }).then((response) => {
-      if(response.data.loggedIn){
-        sessionStorage.setItem("accessToken", response.data.accessToken);
-        sessionStorage.setItem("email", response.data.email);
-        window.location = config.frontendURL + "/library";
-      } else{
-        setEmailBoolUser(true);
-        setErrorMsgUser(response.data.message);
-      }
-    })
-  }
+    axios
+      .post(CONFIG.backendURL + `/user/login`, {
+        USERNAME: username,
+        PASSWORD: passwordUser
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data.loggedIn) {
+          sessionStorage.setItem("accessToken", response.data.accessToken);
+          sessionStorage.setItem("userID", response.data.id);
+          window.location = CONFIG.frontendURL + "/library";
+        } else {
+          setMessageUserBool(true);
+          setErrorMsgUser(response.data.message);
+        }
+      });
+  };
 
   const empLogin = () => {
-    axios.post(config.backendURL + "/employee/login",{
-      ID_EMPLOYEE: id,
-      PASSWORD: passwordEmp
-    }).then((response) => {
-      if(response.data.loggedIn){
-        sessionStorage.setItem("accessToken", response.data.accessToken);
-        sessionStorage.setItem("id", response.data.id);
-        window.location = config.frontendURL + "/administration";
-      }else{
-        setIDBoolEmp(true);
-        setErrorMsgEmp(response.data.message);
-      }
-    })
-  }
+    axios
+      .post(CONFIG.backendURL + "/employee/login", {
+        ID_EMPLOYEE: id,
+        PASSWORD: passwordEmp,
+      })
+      .then((response) => {
+        if (response.data.loggedIn) {
+          sessionStorage.setItem("accessToken", response.data.accessToken);
+          sessionStorage.setItem("id", response.data.id);
+          window.location = CONFIG.frontendURL + "/administration";
+        } else {
+          setMessageEmpBool(true);
+          setErrorMsgEmp(response.data.message);
+        }
+      });
+  };
 
   return (
     <div>
-      <Navbar/>
+      <Navbar />
       <div className="Frontpage">
         <h1>Willkommen beim MiTTWALD Lernwerk</h1>
         <div className="login">
@@ -57,9 +62,9 @@ function Login() {
             <div className="registrationInputs">
               <input
                 type="text"
-                placeholder="Email Adresse..."
+                placeholder="Username..."
                 onChange={(event) => {
-                  setEmailUser(event.target.value);
+                  setUsername(event.target.value);
                 }}
               />
               <input
@@ -70,14 +75,15 @@ function Login() {
                 }}
               />
               <div className="buttonAndError">
-                {emailUser.length === 0 ||
-                passwordUser.length === 0 ? (
+                {username.length === 0 || passwordUser.length === 0 ? (
                   <button disabled>Anmelden</button>
                 ) : (
                   <button onClick={userLogin}>Anmelden</button>
                 )}
 
-                {!emailboolUser ? (<></>) : (
+                {!messageUserBool ? (
+                  <p></p>
+                ) : (
                   <p className="error">{errorMsgUser}</p>
                 )}
               </div>
@@ -101,15 +107,15 @@ function Login() {
                 }}
               />
               <div className="buttonAndError">
-                {
-                id.length === 0 ||
-                passwordEmp.length === 0 ? (
+                {id.length === 0 || passwordEmp.length === 0 ? (
                   <button disabled>Anmelden</button>
                 ) : (
                   <button onClick={empLogin}>Anmelden</button>
                 )}
 
-                {!idboolEmp ? (<></>) : (
+                {!messageEmpBool ? (
+                  <p></p>
+                ) : (
                   <p className="error">{errorMsgEmp}</p>
                 )}
               </div>
