@@ -60,7 +60,7 @@ router.put("/borrowUser", async (req, res) => {
 
   //updates book entry in database
   await borrowBook.save();
-  
+
   return res.send(borrowBook);
 });
 
@@ -76,8 +76,6 @@ router.put("/borrowEmployee", async (req, res) => {
     bookToBorrow.EMAIL_ADDRESS = null; 
     console.log(bookToBorrow);
     await bookToBorrow.save();
-
-    return res.json(bookToBorrow);
   } catch (err) {
     console.log(err);
   }
