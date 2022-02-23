@@ -63,6 +63,7 @@ function Database() {
             <thead>
               <tr>
                 <th>ID_USER</th>
+                <th>USERNAME</th>
                 <th>EMAIL_ADDRESS</th>
                 <th>NAME</th>
                 <th>PASSWORD</th>
@@ -72,6 +73,7 @@ function Database() {
               <tbody className="bookshelfContent">
                 <tr>
                   <td>{users.ID_USER}</td>
+                  <td>{users.USERNAME}</td>
                   <td>{users.EMAIL_ADDRESS}</td>
                   <td>{users.NAME}</td>
                   <td>{users.PASSWORD}</td>
