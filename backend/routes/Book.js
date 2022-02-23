@@ -10,16 +10,23 @@ router.get("/getallbooks", async (req, res) => {
 });
 
 //get books by title
-router.get("/getbooksbyname/:title", async(req, res) => {
-  const TITLE = req.params.title;
+router.post("/getbooksbyname", async (req, res) => {
+  const TITLE = req.body;
 
-  const books = await BOOK.findAll({where: {TITLE}});
-  if(!books){
-    res.send({found: false, message: "Buch nicht gefunden."})
+  let book = [];
+  const books = await BOOK.findAll();
+  books.forEach(element => {
+      if(element.TITLE === TITLE.TITLE){
+        book.push(element);
+      }
+  });
+
+  if(book.length > 0){
+    res.json({found: true, book});
   }else{
-    res.send({found: true}, books);
+    res.json({found: false, message: "Buch konnte nicht gefunden werden."});
   }
-})
+});
 
 //get book by id
 router.get("/getbookbyid/:id", async (req, res) => {
@@ -48,15 +55,15 @@ router.post("/addbook", async (req, res) => {
 
 //changes the borrow status of a book
 router.put("/borrowUser", async (req, res) => {
-  const {ID_BOOK, BORROWED, ID_USER} = req.body;
-  
+  const { ID_BOOK, BORROWED, ID_USER } = req.body;
+
   //gets book, removes bookshelf id, adds user id and changes borrowed status to true
-  const borrowBook = await BOOK.findOne({where: {ID_BOOK}});
-  console.log(borrowBook)
+  const borrowBook = await BOOK.findOne({ where: { ID_BOOK } });
+  console.log(borrowBook);
   borrowBook.BORROWED = BORROWED;
   borrowBook.ID_BOOKSHELF = null;
   borrowBook.ID_USER = ID_USER;
-  console.log(borrowBook)
+  console.log(borrowBook);
 
   //updates book entry in database
   await borrowBook.save();
@@ -66,19 +73,16 @@ router.put("/borrowUser", async (req, res) => {
 
 //changes the borrow status of a book
 router.put("/borrowEmployee", async (req, res) => {
-  const ID_BOOK = req.body.id;
-  const BORROW = req.body.borrow;
+  const { ID_BOOK, BORROWED } = req.body;
 
-  try {
-    const bookToBorrow = await BOOK.findOne({ where: { ID_BOOK } });
+  const borrowBook = await BOOK.findOne({ where: { ID_BOOK } });
+  console.log(borrowBook);
+  borrowBook.BORROWED = BORROWED;
+  borrowBook.ID_USER = null;
+  console.log(borrowBook);
 
-    bookToBorrow.BORROWED = BORROW;
-    bookToBorrow.EMAIL_ADDRESS = null; 
-    console.log(bookToBorrow);
-    await bookToBorrow.save();
-  } catch (err) {
-    console.log(err);
-  }
+  await borrowBook.save();
+  return res.send(borrowBook);
 });
 
 router.delete("/deletebook/:id", async (req, res) => {
@@ -122,7 +126,6 @@ router.put("/putbooktostorage", async (req, res) => {
     await storagebooks.forEach((element) => {
       element.ID_BOOKSHELF = null;
     });
-    console.log("hallo2");
     console.log(storagebooks);
     await storagebooks.forEach((element) => {
       element.save();
