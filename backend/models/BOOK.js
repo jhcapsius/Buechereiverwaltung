@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) =>{
             autoIncrement: true
         },
         //foreign key
-        EMAIL_ADDRESS:{
-            type: DataTypes.STRING,
+        ID_USER:{
+            type: int,
             allowNull: true
         },
         //foreign key
