@@ -117,7 +117,7 @@ insert into EMPLOYEE (JOB_TITLE, ID_CHEF, NAME, BIRTHDAY, RESIDENCE, TOWN, POSTA
 insert into EMPLOYEE (JOB_TITLE, ID_CHEF, NAME, BIRTHDAY, RESIDENCE, TOWN, POSTAL_CODE) values ('Azubi', 5, 'Lisa Goldschmidt', '1999-12-08' , 'Luckenbwalder Strasse 91', 'Despetal', 31035);
 insert into EMPLOYEE (JOB_TITLE, ID_CHEF, NAME, BIRTHDAY, RESIDENCE, TOWN, POSTAL_CODE) values ('Azubi', 5, 'Daniel Bumgarner', '2004-05-23', 'Schoenebergerstrasse 58', 'Grünhain', 08358);
 insert into EMPLOYEE (JOB_TITLE, ID_CHEF, NAME, BIRTHDAY, RESIDENCE, TOWN, POSTAL_CODE) values ('Hausmeister', 1, 'Stefanie Maier', '1978-02-06' , 'Hermannstrasse 52', 'Gunterblum', 67583);
-insert into EMPLOYEE (JOB_TITLE, ID_CHEF, NAME, BIRTHDAY, RESIDENCE, TOWN, POSTAL_CODE) values ('IT-Admin', 1, 'Jan-Henrik Capsius', '1993-11-04' , 'Am Hinkenkamp 8', 'Steyerberg', 31595);
+
 
 /*==============================================================*/
 /* Fill booshelfs with sample values                            */
