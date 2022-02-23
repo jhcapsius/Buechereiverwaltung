@@ -43,6 +43,7 @@ create table BOOKSHELF
 create table USER
 (
    ID_USER int not null AUTO_INCREMENT,
+   USERNAME varchar(200) not null,
    EMAIL_ADDRESS varchar(200) not null,
    NAME varchar(300) not null,
    PASSWORD varchar(200) not null,
