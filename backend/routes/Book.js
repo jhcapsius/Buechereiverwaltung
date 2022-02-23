@@ -10,13 +10,12 @@ router.get("/getallbooks", async (req, res) => {
 });
 
 //get books by title
-
 router.get("/getbooksbyname/:title", async(req, res) => {
   const TITLE = req.params.title;
 
   const books = await BOOK.findAll({where: {TITLE}});
   if(!books){
-    res.send({found: false, message: "Buch nicht vorhanden"})
+    res.send({found: false, message: "Buch nicht gefunden."})
   }else{
     res.send({found: true}, books);
   }
@@ -49,23 +48,19 @@ router.post("/addbook", async (req, res) => {
 
 //changes the borrow status of a book
 router.put("/borrowUser", async (req, res) => {
-  const {ID_BOOK, BORROWED, EMAIL_ADDRESS} = req.body;
+  const {ID_BOOK, BORROWED, ID_USER} = req.body;
   
-  try {
-    const bookToBorrow = await BOOK.findOne({ where: { ID_BOOK } });
+  //gets book, removes bookshelf id, adds user id and changes borrowed status to true
+  const borrowBook = await BOOK.findOne({where: {ID_BOOK}});
+  console.log(borrowBook)
+  borrowBook.BORROWED = BORROWED;
+  borrowBook.ID_BOOKSHELF = null;
+  borrowBook.ID_USER = ID_USER;
+  console.log(borrowBook)
 
-    bookToBorrow.BORROWED = BORROWED;
-    bookToBorrow.EMAIL_ADDRESS = EMAIL_ADDRESS;
-    bookToBorrow.ID_BOOKSHELF = null;
-
-    console.log(bookToBorrow);
-
-    await bookToBorrow.save();
-
-    return res.json(bookToBorrow);
-  } catch (err) {
-    console.log(err);
-  }
+  //updates book entry in database
+  await borrowBook.save();
+  return res.send(borrowBook);
 });
 
 //changes the borrow status of a book
