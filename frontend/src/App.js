@@ -8,7 +8,7 @@ import Database from "./pages/Database/Database";
 
 function App() {
   
-  let loggedInUser = sessionStorage.getItem("accessToken") && sessionStorage.getItem("email") ? true : false;
+  let loggedInUser = sessionStorage.getItem("accessToken") && sessionStorage.getItem("userID") ? true : false;
   let loggedInEmployee = sessionStorage.getItem("accessToken") && sessionStorage.getItem("id") ? true : false;
 
   return (
